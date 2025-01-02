@@ -1,0 +1,41 @@
+const GliderGun = new Set();
+
+// Save the coordinates
+GliderGun.add("1,5");
+GliderGun.add("1,6");
+GliderGun.add("2,5");
+GliderGun.add("2,6");
+GliderGun.add("11,5");
+GliderGun.add("11,6");
+GliderGun.add("11,7");
+GliderGun.add("12,4");
+GliderGun.add("12,8");
+GliderGun.add("13,3");
+GliderGun.add("13,9");
+GliderGun.add("14,3");
+GliderGun.add("14,9");
+GliderGun.add("15,6");
+GliderGun.add("16,4");
+GliderGun.add("16,8");
+GliderGun.add("17,5");
+GliderGun.add("17,6");
+GliderGun.add("17,7");
+GliderGun.add("18,6");
+GliderGun.add("21,3");
+GliderGun.add("21,4");
+GliderGun.add("21,5");
+GliderGun.add("22,3");
+GliderGun.add("22,4");
+GliderGun.add("22,5");
+GliderGun.add("23,2");
+GliderGun.add("23,6");
+GliderGun.add("25,1");
+GliderGun.add("25,2");
+GliderGun.add("25,6");
+GliderGun.add("25,7");
+GliderGun.add("35,3");
+GliderGun.add("35,4");
+GliderGun.add("36,3");
+GliderGun.add("36,4");
+
+export default GliderGun;
