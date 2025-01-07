@@ -36,19 +36,6 @@ const SidebarContainer = styled.div<{ isOpen: boolean; pos: string }>`
   }
 `;
 
-const SidebarItem = styled.a`
-  padding: 10px 20px;
-  text-decoration: none;
-  font-size: 18px;
-  color: white;
-  display: block;
-  transition: color 0.2s;
-
-  &:hover {
-    color: #f1f1f1;
-  }
-`;
-
 const OpenButton = styled.button<{
   isOpen: boolean;
   spins: boolean;
