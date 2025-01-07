@@ -1,3 +1,5 @@
+"use client";
+
 import styled from "styled-components";
 import Education from "./Edu";
 import Projects from "./Projects";
