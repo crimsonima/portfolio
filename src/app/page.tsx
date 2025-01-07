@@ -1,9 +1,13 @@
-import Link from "next/link";
+"use client";
+import styled from "styled-components";
+import MainPage from "./MainPage/MainPage";
+
+const MainDiv = styled.div``;
+
 export default function Home() {
   return (
-    <div>
-      <h1>Welcome to Next.js (App Router)!</h1>
-      <Link href="/gof">game of life</Link>
-    </div>
+    <MainDiv>
+      <MainPage />
+    </MainDiv>
   );
 }
