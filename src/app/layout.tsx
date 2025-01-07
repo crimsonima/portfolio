@@ -1,4 +1,5 @@
 import StyledLayout from "./StyledLayout";
+import GlobalStyles from "./GlobalStyles";
 
 export const metadata = {
   title: "Portfolio",
@@ -12,6 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <GlobalStyles />
       <body>
         <StyledLayout>{children}</StyledLayout>
       </body>

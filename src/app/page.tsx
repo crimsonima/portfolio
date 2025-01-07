@@ -38,26 +38,31 @@ const AboutMe = styled.section`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
+import GlobalStyles from "./GlobalStyles";
+
 export default function Home() {
   return (
-    <Container>
-      <Header>
-        Still Under Development <LiaToolsSolid />
-      </Header>
-      <Main>
-        {" "}
-        <AboutMe>
-          <h2>About Me</h2>
-          <p>
-            Hi, I&apos;m Nima! I&apos;m passionate about web development, AI,
-            and creating interactive user experiences. I love building projects
-            that solve real-world problems.
-          </p>
-        </AboutMe>
-        <Education />
-        <Projects />
-      </Main>
-      <Footer>© 2025 Nima</Footer>
-    </Container>
+    <>
+      <GlobalStyles />
+      <Container>
+        <Header>
+          Still Under Development <LiaToolsSolid />
+        </Header>
+        <Main>
+          {" "}
+          <AboutMe>
+            <h2>About Me</h2>
+            <p>
+              Hi, I&apos;m Nima! I&apos;m passionate about web development, AI,
+              and creating interactive user experiences. I love building
+              projects that solve real-world problems.
+            </p>
+          </AboutMe>
+          <Education />
+          <Projects />
+        </Main>
+        <Footer>© 2025 Nima</Footer>
+      </Container>
+    </>
   );
 }
