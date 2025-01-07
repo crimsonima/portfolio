@@ -9,12 +9,9 @@ import { FaCirclePause, FaCirclePlay } from "react-icons/fa6";
 import { RiDiceLine } from "react-icons/ri";
 import { MdCleaningServices } from "react-icons/md";
 import { BiSolidSkipNextCircle, BiSolidMemoryCard } from "react-icons/bi";
+import { arrayClone } from "./ArrayClone";
 
 import { FaGear } from "react-icons/fa6";
-
-export function arrayClone(array: boolean[][]) {
-  return JSON.parse(JSON.stringify(array));
-}
 
 export default function GameOfLife() {
   const [speed, setSpeed] = useState(100);
@@ -57,8 +54,10 @@ export default function GameOfLife() {
     // Then seed the grid using the cleared state
     setGrid((prevGrid) => {
       const gridCopy = arrayClone(prevGrid);
-      const updatedGrid = gridCopy.map((row) =>
-        row.map((val) => (Math.floor(Math.random() * 4) === 1 ? true : val))
+      const updatedGrid = gridCopy.map((row: boolean[]) =>
+        row.map((val: boolean) =>
+          Math.floor(Math.random() * 4) === 1 ? true : val
+        )
       );
       return updatedGrid;
     });
@@ -128,7 +127,7 @@ export default function GameOfLife() {
 
   const gliderGun = () => {
     const g = Array.from({ length: rows }, () => Array(cols).fill(false));
-    GliderGun.forEach((cell) => {
+    GliderGun.forEach((cell: string) => {
       const [y, x] = cell.split(",").map(Number); // Parse the coordinates
       g[x][y] = true; // Set the cell to true
     });
@@ -284,7 +283,6 @@ export default function GameOfLife() {
       </Sidebar>
       <Grid
         fullGrid={grid}
-        speed={speed}
         rows={rows}
         cols={cols}
         selectBox={selectBox}

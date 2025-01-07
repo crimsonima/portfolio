@@ -1,4 +1,4 @@
-const GliderGun = new Set();
+const GliderGun: Set<string> = new Set();
 
 // Save the coordinates
 GliderGun.add("1,5");
