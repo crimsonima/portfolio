@@ -12,6 +12,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        {/* Add your custom font link */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=VT323&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body>
         <StyledLayout>{children}</StyledLayout>
       </body>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import "@fontsource/press-start-2p";
 import Grid from "./grid";
 import GliderGun from "./GosperGliderGun";
 import styled from "styled-components";
@@ -26,7 +27,7 @@ export default function GameOfLife() {
   const [isRunning, setIsRunning] = useState(false); // State to track play/pause
   const [liveColor, setLiveColor] = useState("#3dffb1");
   const [liveColorin, setLiveColorin] = useState(liveColor);
-  const [deadColor, setDeadColor] = useState("#fafffd");
+  const [deadColor, setDeadColor] = useState("#262625");
   const [deadColorin, setDeadColorin] = useState(deadColor);
   const gridRef = useRef<boolean[][]>([]); // Ref to store the latest grid state
 
@@ -307,6 +308,7 @@ const Examples = styled.button`
 `;
 
 const StyledMain = styled.div`
+  font-family: "Press Start 2P", sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: center;

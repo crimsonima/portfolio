@@ -18,7 +18,7 @@ const Education = () => (
       </li>
       <li>
         <strong>MSc in Computer Science</strong> - University of Eastern Finland
-        (2024–)
+        (2024–present)
       </li>
     </ul>
   </Section>

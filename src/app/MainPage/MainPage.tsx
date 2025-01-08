@@ -38,7 +38,7 @@ const AboutMe = styled.section`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
-export default function Home() {
+export default function MainPage() {
   return (
     <>
       <Container>
