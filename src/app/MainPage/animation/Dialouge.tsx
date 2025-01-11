@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 const DialogueBox = styled.div`
@@ -29,27 +29,44 @@ const Tail = styled.div`
 `;
 
 interface Diainter {
-  text: string; // Full text to display
+  text: string[]; // Full text to display
 }
 
 export default function Dialogue({ text }: Diainter) {
   const [displayedText, setDisplayedText] = useState(""); // For the typing effect
+  const intervalRef = useRef<number | null>(null); // Store interval ID
+  const timeoutRef = useRef<number | null>(null); // Store timeout ID
+
+  const diaCallback = (text: string[], wordIndex: number) => {
+    let textIndex = 0;
+    let currentText = "";
+    if (wordIndex < text.length) {
+      intervalRef.current = window.setInterval(() => {
+        if (textIndex < text[wordIndex].length) {
+          currentText += text[wordIndex][textIndex]; // Append the next character
+          setDisplayedText(currentText); // Update state with the new value
+          textIndex++;
+        } else {
+          clearInterval(intervalRef.current!);
+          timeoutRef.current = window.setTimeout(() => {
+            diaCallback(text, wordIndex + 1);
+          }, 1000);
+        }
+      }, 100);
+    }
+  };
 
   useEffect(() => {
-    let index = 0;
-    let currentText = ""; // Local variable to track displayed text
-
-    const timer = setInterval(() => {
-      if (index < text.length) {
-        currentText += text[index]; // Append the next character
-        setDisplayedText(currentText); // Update state with the new value
-        index++;
-      } else {
-        clearInterval(timer); // Stop when all characters are displayed
+    diaCallback(text, 0);
+    return () => {
+      // Cleanup on unmount or when text changes
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
       }
-    }, 100); // Adjust typing speed here (100ms per character)
-
-    return () => clearInterval(timer); // Clean up interval on unmount
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
   }, [text]);
 
   return (

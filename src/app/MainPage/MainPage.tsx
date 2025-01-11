@@ -5,8 +5,9 @@ import Education from "./Edu";
 import Projects from "./Projects";
 import { LiaToolsSolid } from "react-icons/lia";
 import PixelFigure from "./animation/PixelFigure";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Dialogue from "./animation/Dialouge";
+import dialogues from "./Dialogues";
 
 const Container = styled.div`
   display: flex;
@@ -59,32 +60,56 @@ const SpriteContainer = styled.div`
 `;
 
 export default function MainPage() {
+  const RandomDialogue = (textArr: string[][]) => {
+    const random = Math.floor(Math.random() * textArr.length);
+    console.log(textArr[random]);
+    return textArr[random];
+  };
+
   const [talkControl, setTalkControl] = useState(false);
-  const [currentDialogue, setCurrentDialogue] = useState("Hey! Sup?");
+  const timeoutRef = useRef<number | null>(null); // To track timeout IDs
+  const secondTimeoutRef = useRef<number | null>(null);
+  const [currentText, setCurrentText] = useState(() =>
+    RandomDialogue(dialogues.intro.texts)
+  );
+  const [currentDialogue, setCurrentDialogue] = useState(dialogues.intro);
 
-  useEffect(() => {
+  const talkC = (dArr: string[], i: number) => {
     setTalkControl(true);
-
-    const duration = currentDialogue.length * 100;
-
-    const timer = setTimeout(() => {
+    if (i < dArr.length) {
+      timeoutRef.current = window.setTimeout(() => {
+        i++;
+        setTalkControl(false);
+        secondTimeoutRef.current = window.setTimeout(() => {
+          talkC(dArr, i);
+        }, 1000);
+      }, dArr[i].length * 100);
+    } else {
       setTalkControl(false);
-    }, duration);
-
-    return () => clearTimeout(timer);
-  }, [currentDialogue]);
-
-  const dialogueHandler = () => {
-    setCurrentDialogue("...");
+    }
   };
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setCurrentDialogue("It's a mess right now but he's working on it!");
-    }, 3000);
+    talkC(currentText, 0);
+    return () => {
+      // Cleanup all active timeouts on unmount or dependency change
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      if (secondTimeoutRef.current) {
+        clearTimeout(secondTimeoutRef.current);
+      }
+    };
+  }, [currentText]);
 
-    return () => clearTimeout(timer);
-  }, []);
+  const dialogueHandler = () => {
+    setCurrentText(["..."]);
+  };
+
+  const handleOptionSelect = (option: keyof typeof dialogues) => {
+    setCurrentDialogue(dialogues[option]);
+    setCurrentText(() => RandomDialogue(dialogues[option].texts));
+  };
 
   return (
     <>
@@ -93,11 +118,22 @@ export default function MainPage() {
           Still Under Development <LiaToolsSolid />
         </Header>
         <Main>
+          {/* <DummyComponent /> */}
           <SpriteContainer>
             <PixelFigure talkControl={talkControl} />
             <DialogueWrapper onClick={dialogueHandler}>
-              <Dialogue text={currentDialogue} />
+              <Dialogue text={currentText} />
             </DialogueWrapper>
+            <ButtonBox>
+              {currentDialogue.options.map((option, index) => (
+                <StyledButton
+                  key={index}
+                  onClick={() => handleOptionSelect(option.nextState)}
+                >
+                  {option.label}
+                </StyledButton>
+              ))}
+            </ButtonBox>
           </SpriteContainer>
           <AboutMe>
             <h2>About Me</h2>
@@ -115,3 +151,26 @@ export default function MainPage() {
     </>
   );
 }
+
+const StyledButton = styled.button`
+  font-family: inherit;
+  font-weight: 100;
+  font-size: 0.9rem;
+  color: #303030;
+  box-shadow: 2px -2px 0px #000;
+  background-color: grey;
+  &:hover {
+    background-color: #303030;
+    color: grey;
+  }
+`;
+
+const ButtonBox = styled.div`
+  position: absolute; /* Position relative to the SpriteContainer */
+  top: 90px; /* Adjust to place above the figure */
+  left: 220px; /* Adjust to position on the right side of the figure */
+  gap: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Optional: Align dialogue text horizontally */
+`;

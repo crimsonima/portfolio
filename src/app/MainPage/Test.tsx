@@ -1,38 +1,33 @@
-"use client";
+import { useState, useEffect } from "react";
 
-import styled from "styled-components";
+export default function DummyComponent() {
+  const [count, setCount] = useState(0); // Counter state
 
-const Parent = styled.div`
-  position: relative; /* Makes this the reference point for child elements */
-  width: 300px;
-  height: 300px;
-  background: lightblue;
-  display: flex;
-  align-items: center; /* Vertically aligns children */
-  justify-content: flex-start; /* Aligns children to the left */
-`;
+  useEffect(() => {
+    // Start the interval to increment the counter
+    const interval = setInterval(() => {
+      setCount((prevCount) => prevCount + 1); // Increment the counter
+      console.log("Interval tick: ", count); // Log current count
+    }, 1000); // 1-second interval
 
-const Figure = styled.div`
-  width: 50px;
-  height: 50px;
-  background: darkblue;
-  border-radius: 50%;
-`;
+    // Set a timeout to clear the interval after 10 seconds
+    const timeout = setTimeout(() => {
+      clearInterval(interval); // Stop the interval
+      console.log("Timeout: Interval cleared after 10 seconds.");
+    }, 10000); // 10-second timeout
 
-const Dialogue = styled.div`
-  position: absolute; /* Allows precise placement relative to Parent */
-  top: 50px; /* Distance from the top of the Parent */
-  left: 60px; /* Distance from the left of the Parent */
-  background: white;
-  padding: 0.5rem;
-  border: 1px solid black;
-`;
+    // Cleanup function to clear the interval and timeout on unmount
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+      console.log("Cleanup: Component unmounted or dependencies changed.");
+    };
+  }, []); // Empty dependency array ensures this runs only on mount
 
-export default function DummyPositioning() {
   return (
-    <Parent>
-      <Figure />
-      <Dialogue>I am a dialogue box!</Dialogue>
-    </Parent>
+    <div>
+      <h1>Count: {count}</h1>
+      <p>Counter increments every second and stops after 10 seconds.</p>
+    </div>
   );
 }
